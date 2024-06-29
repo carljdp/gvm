@@ -1,0 +1,123 @@
+{
+    "folders": [
+		{
+			"path": ".",
+            "name": "/"
+		}
+	],
+	"settings": {
+        "files.exclude": {
+            "**/.git": true,
+            "**/.svn": true,
+            "**/.hg": true,
+            "**/CVS": true,
+            "**/.DS_Store": true,
+            "**/Thumbs.db": true
+        },
+        "python.venvPath": "${workspaceFolder}/.venv",
+        "python.pipenvPath": "${workspaceFolder}/.venv/bin/activate",
+        "python.poetryPath": "${workspaceFolder}/.venv/bin/poetry",
+        //
+        // personal preferences
+        "explorer.confirmDragAndDrop": false,
+        "explorer.compactFolders": false,
+        "workbench.tree.indent": 24,
+        "workbench.tree.expandMode": "doubleClick",
+        "workbench.tree.renderIndentGuides": "always",
+        "python.REPL.sendToNativeREPL": false, // till i unlearn shift+enter
+        //
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "[python]": {
+            "editor.defaultFormatter": "ms-python.autopep8",
+            "editor.formatOnSave": true,
+            "editor.formatOnType": true,
+            "editor.autoIndent": "full",
+            "editor.detectIndentation": false,  // Enforce consistent style
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4,
+            "files.trimTrailingWhitespace": false,
+            "files.insertFinalNewline": true,
+            "editor.rulers": [
+                80, 100, 120
+            ],
+        },
+        "autopep8.importStrategy": "fromEnvironment",
+        "autopep8.args": [
+            "--ignore=E303",
+            "--aggressive",
+            "--aggressive",
+        ],
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-python.autopep8",
+            "ms-python.python",
+            "tamasfe.even-better-toml"
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "poetry install (dependencies)",
+                "command": "poetry",
+                "type": "shell",
+                "args": [
+                    "install"
+                ],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": "none"
+            },
+            {
+                "label": "poetry run autopep8 (format)",
+                "command": "poetry",
+                "type": "shell",
+                "args": [
+                    "run",
+                    "autopep8",
+                    ".",
+                    "--recursive",
+                    "--in-place",
+                    "--ignore=E303",
+                    "--aggressive",
+                    "--aggressive",
+                ],
+            }
+        ]
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            // first config in array is considered default
+            {
+                "name": "Debug Current File",
+                "type": "debugpy",
+                "request": "launch",
+                "program": "${file}",
+                "console": "integratedTerminal",
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder}/.venv/bin/python"
+                }
+            },
+            {
+                "name": "Debug gvm/main.py --list",
+                "type": "debugpy",
+                "request": "launch",
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder}/.venv/bin/python"
+                },
+                "cwd": "${workspaceFolder}",
+                "python": "${command:python.interpreterPath}",
+                "program": "${workspaceFolder}/src/gvm/main.py",
+                "args": [
+                    "--list"
+                ],
+                "console": "integratedTerminal",
+            }
+        ],
+        "compounds": []
+    },
+}
